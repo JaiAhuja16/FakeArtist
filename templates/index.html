@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nakli Artist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="connection-dot" id="connectionDot" title="Connecting..."></div>
+
+    <!-- Lobby Overlay -->
+    <div class="lobby-overlay" id="lobbyOverlay">
+        <div class="lobby-bg-shapes">
+            <div class="lobby-shape s1"></div>
+            <div class="lobby-shape s2"></div>
+            <div class="lobby-shape s3"></div>
+            <div class="lobby-shape s4"></div>
+        </div>
+        <div class="lobby-card">
+            <div class="lobby-logo" id="lobbyLogo"> <span class="logo-icon">🎨</span> <span class="logo-text">Nakli
+                    Artist</span> <span class="logo-tagline">Find the fake among us!</span> </div> <input type="text"
+                id="nameInput" placeholder="Your name" maxlength="14"> <input type="text" id="roomInput"
+                placeholder="Room code (e.g. APPLE)" maxlength="8"> <button id="joinBtn" class="tool-btn join-btn">Join
+                Game</button>
+        </div>
+    </div>
+
+    <div class="game-container" id="gameContainer">
+        
+        <!-- Players Panel (left side) -->
+        <aside class="players-panel" id="playersPanel"></aside>
+        
+        <!-- Canvas Panel (center) -->
+        <main class="canvas-panel">
+            <div class="turn-status" id="turnStatus">Waiting for game to start...</div>
+            <div class="timer-bar-track">
+                <div class="timer-bar-fill" id="timerFill"></div>
+            </div>
+            <div class="canvas-wrapper" id="canvasWrapper"> <canvas id="drawingCanvas" width="800"
+                    height="600"></canvas>
+                    
+                <!-- Voting Overlay -->
+                <div class="canvas-overlay voting-overlay" id="votingOverlay" style="display:none;">
+                    <div class="voting-card">
+                        <h2>🗳️ Who is the Fake Artist?</h2>
+                        <p style="color:#a8b3c4;font-size:0.85rem;margin-top:6px;">Select one suspect</p>
+                        <div class="vote-options" id="voteOptions"></div>
+                        <p style="color:#6b7686;font-size:0.78rem;margin-top:12px;" id="voteWaiting">Waiting for others
+                            to vote...</p>
+                    </div>
+                </div>
+                
+                <!-- Reveal Overlay -->
+                <div class="canvas-overlay reveal-overlay" id="revealOverlay" style="display:none;">
+                    <div class="reveal-card">
+                        <h2 id="revealOutcome"></h2>
+                        <p id="revealDetails"></p> <button id="playAgainBtn" class="tool-btn"
+                            style="background:#4ecdc4;box-shadow:0 3px 0 #2a8f89;">Play Again</button> <button
+                            id="backToLobbyBtn" class="tool-btn"
+                            style="margin-top:8px;background:#6b7686;box-shadow:0 3px 0 #4a525f;">Return to
+                            Lobby</button>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar"> <label for="sizeSlider" style="color:#a8b3c4;font-size:0.82rem;">Size:</label> <input
+                    type="range" id="sizeSlider" min="1" max="50" value="4"> <span id="sizeValue"
+                    style="color:#fff;font-size:0.82rem;min-width:20px;">4</span> </div>
+        </main>
+        
+        <!-- Chat Panel (right side) -->
+        <aside class="chat-panel">
+            <div class="chat-actions">
+                <button id="startGameBtn" class="tool-btn" style="display:none;">
+                    Start
+                    Game</button> <button id="endRoundBtn" class="tool-btn"
+                    style="display:none;background:#6c5ce7;box-shadow:0 3px 0 #4a3fa0;">End Round & Vote</button>
+                <button id="leaveLobbyBtn" class="tool-btn leave-btn" style="display:none;">🚪 Leave Room</button>
+            </div>
+            <div class="role-banner" id="roleBanner"></div>
+            <div class="chat-log" id="chatLog"></div>
+            <form class="chat-input-row" id="chatForm"> <input type="text" id="chatInput" placeholder="Say something..."
+                    autocomplete="off"> <button type="submit">➤</button> </form>
+        </aside>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
